@@ -29,12 +29,9 @@ Current focus: robust Visual-Inertial Odometry, sensor fusion and gradual integr
 
 ## Hardware
 
-- **Compute**: Raspberry Pi 5 (4/8 GB)
-- **Camera**: Raspberry Pi Camera Module 3 (or Arducam global shutter)
-- **IMU**: MPU-9250 / ICM-20948 (9-axis)
-- **Platform**: Optional 2WD robot chassis for ground testing
-- **Power**: 5V/5A USB-C + LiPo battery pack
-
+- **Compute**: Raspberry Pi 5 (4 GB)
+- **Camera**: ArduCam OV9281 1Mpx Global Shutter
+- **IMU**: ICM-20948 3-axis 
 ---
 
 ## Software Stack
