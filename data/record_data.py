@@ -4,6 +4,7 @@ import csv
 import board
 import numpy as np
 from datetime import datetime
+from utils.imu_utils import IMUCalibrator
 
 # I2C und Sensor initialisieren
 i2c = board.I2C()  
@@ -18,6 +19,8 @@ imu_data = []
 
 messpunkte = 1000 # Wie viele Punkte wir sammeln wollen
 i = 0
+
+print("Starte Aufnahme - Drehe das Gerät langsam in alle Richtungen... (Strg+C zum Stoppen)")
 
 
 with open(csv_data, mode='w', newline='') as file:
@@ -35,6 +38,10 @@ with open(csv_data, mode='w', newline='') as file:
             gx, gy, gz = icm.gyro
             mx, my, mz = icm.magnetic
 
+            ax, ay, az, gx, gy, gz, mx, my, mz = calibrator.correct(
+            [ax, ay, az], [gx, gy, gz], [mx, my, mz])
+      
+
             # 1. Für CSV (Analyse)
             writer.writerow([t, ax, ay, az, gx, gy, gz, mx, my, mz ])
 
@@ -48,14 +55,12 @@ with open(csv_data, mode='w', newline='') as file:
             })
             i+= 1
              # Fortschrittsanzeige in der Konsole
-            if i % 100 == 0:
-                print(f"[{i}/{messpunkte}] Daten werden gesammelt...")
+            if i % 200 == 0:
+                print(f"[{i}/{messpunkte}] Mag: {mx:6.1f} {my:6.1f} {mz:6.1f} µT")
             
-            if i - messpunkte == 0:
-                print(f"{messpunkte} Samples gesammelt...")
 
 
-            time.sleep(0.01)     
+            time.sleep(0.02)     
 
 
 
