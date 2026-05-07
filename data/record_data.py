@@ -4,7 +4,7 @@ import csv
 import board
 import numpy as np
 from datetime import datetime
-from utils.imu_utils import IMUCalibrator
+from utils import imu_utils
 
 # I2C und Sensor initialisieren
 i2c = board.I2C()  
@@ -38,7 +38,7 @@ with open(csv_data, mode='w', newline='') as file:
             gx, gy, gz = icm.gyro
             mx, my, mz = icm.magnetic
 
-            ax, ay, az, gx, gy, gz, mx, my, mz = calibrator.correct(
+            ax, ay, az, gx, gy, gz, mx, my, mz = IMUCalibrator.correct(
             [ax, ay, az], [gx, gy, gz], [mx, my, mz])
       
 
