@@ -5,6 +5,7 @@ docker run -it --rm \
   --network host \
   --ipc host \
   -v /dev:/dev \
+  --device=/dev:/dev \
   -v /run/udev:/run/udev:ro \
   -v $(pwd):/workspace \
   gps-denied:aquarius
