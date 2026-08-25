@@ -8,4 +8,4 @@ docker run -it --rm \
   --device=/dev:/dev \
   -v /run/udev:/run/udev:ro \
   -v $(pwd):/workspace \
-  gps-denied:aquarius
+  gps-denied:ros_system
