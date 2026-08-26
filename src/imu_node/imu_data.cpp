@@ -50,9 +50,9 @@ int icm_cancel_sleep_mode(int file, int power_adress);
 int register_bank_switch(int file, int register_adress, int change_adress);
 int acc_config(int file, int acc_adress_config, int config_value);
 int acc_sensitivity_check (int acc_configuration);
-int acc_value_bytes(int file, int acc_value_adress);
-int high_low_bytes_merge(int high_bytes, int low_bytes);
-float adjusted_sensor_value (int sensor_value, int sensitivity);
+int sensor_value_bytes(int file, int sensor_value_adress);
+int16_t high_low_bytes_merge(int high_bytes, int low_bytes);
+float adjusted_sensor_value (int16_t sensor_value, int sensitivity);
 float g_to_m_2_conversion(string message, float sensor_value);
 
 //MAIN
@@ -73,8 +73,8 @@ int acc_sens = acc_sensitivity_check(acc_config_new);
 register_bank_switch(datei, register_bank, 0x00);
 while(1) {
 
-int acc_x_h = acc_value_bytes(datei, r_acc_x_h);
-int acc_x_l = acc_value_bytes(datei, r_acc_x_l);
+int acc_x_h = sensor_value_bytes(datei, r_acc_x_h);
+int acc_x_l = sensor_value_bytes(datei, r_acc_x_l);
 
 int16_t acc_x_out = high_low_bytes_merge(acc_x_h, acc_x_l);
 
@@ -165,7 +165,7 @@ if (acc_config_new < 0){
 
   
 }
-return 0;
+return acc_config_new;
 }
 
 //Accelerometer Sensitivität rauslesen
@@ -199,10 +199,10 @@ switch(acc_sensitivity_setting)
 return acc_sensitivity;
 }
 
-//Accelerometer  Bytes auslesen
-int acc_value_bytes(int file, int acc_value_adress){
+//Sensor Werte Bytes auslesen
+int sensor_value_bytes(int file, int sensor_value_adress){
 
-int acc_value = i2c_smbus_read_byte_data(file, acc_value_adress);
+int acc_value = i2c_smbus_read_byte_data(file, sensor_value_adress);
   if (acc_value< 0) {
     cout << "Keine Daten" << '\n';
     exit(1);
@@ -213,7 +213,7 @@ int acc_value = i2c_smbus_read_byte_data(file, acc_value_adress);
 return acc_value;
 }
 
-int high_low_bytes_merge(int high_bytes, int low_bytes){
+int16_t high_low_bytes_merge(int high_bytes, int low_bytes){
 // SOURCE: https://industrialmonitordirect.com/de/blogs/knowledgebase/combining-high-byte-low-byte-into-word-binary-math-method?srsltid=AfmBOoqPGT1rgdbHERlU07CDVI11ToKN9l4_3Tkd5s8zL_GK-xMJ23Xx/
 // Accelerometer X-Achsen Werte zusammenführen
 int16_t value = high_bytes* 256 + low_bytes;
@@ -223,7 +223,7 @@ return value;
 }
 
 
-float adjusted_sensor_value (int sensor_value, int sensitivity){
+float adjusted_sensor_value (int16_t sensor_value, int sensitivity){
 float clean_sensor_value = static_cast<float> (sensor_value) / static_cast<float> (sensitivity);
 return clean_sensor_value;
 }
