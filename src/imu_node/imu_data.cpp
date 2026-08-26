@@ -13,38 +13,18 @@ extern "C" {
 }
 
 
-//Globale Variablen Definitionen
+// Namespace Definitionen
 using namespace std;
+
+//Globale Variablen Definitionen
+
 int addr = 0x69;
 int file;
 int adapter_nr = 1;
 char filename [20];
 
-int main() {
-
-
-//Linux Datei Öffnen
-
-file = open("/dev/i2c-1", O_RDWR);
-
-cout << "File descriptor: " << file << '\n';
-
-
-if (file < 0)
-{
-    exit(1);
-}
-
-//I2C Bus Addresse auswählen die wir ansprechen möchten
-
-if (ioctl(file, I2C_SLAVE, addr) < 0) {
-    exit(1);
-}
-
-
 //Zugriff auf die ICM Register 
 // SOURCE: https://product.tdk.com/system/files/dam/doc/product/sensor/mortion-inertial/imu/data_sheet/ds-000189-icm-20948-v1.5.pdf*/
-
 
 __u8 r_acc_x_h = 0x2D;
 __u8 r_acc_x_l = 0x2E;
@@ -62,29 +42,109 @@ __u8 register_bank = 0x7F;
 __u8 acc_co = 0x14;
 
 
+//Funktion Deklaration
 
-//Sleep Mode ausschalten
-int power = i2c_smbus_read_byte_data(file, pwr);
+int linux_i2c_file_open(string str);
+int linux_i2c_bus_adress_access(int file, int address);
+int icm_cancel_sleep_mode(int file, int power_adress);
+int register_bank_switch(int file, int register_adress, int change_adress);
+int acc_config(int file, int acc_adress_config, int config_value);
+int acc_sensitivity_check (int acc_configuration);
+int acc_value_bytes(int file, int acc_value_adress);
+int high_low_bytes_merge(int high_bytes, int low_bytes);
+float adjusted_sensor_value (int sensor_value, int sensitivity);
+float g_to_m_2_conversion(string message, float sensor_value);
 
-int power_status = i2c_smbus_write_byte_data(file, pwr, 0x01);
-if (power_status < 0){
-  cout << "Problem beim Power Modus" << '\n';
+//MAIN
+
+int main() {
+
+string sensor_message = "Accelerometer X-Achse";
+int datei = linux_i2c_file_open("/dev/i2c-1");
+
+linux_i2c_bus_adress_access(datei, addr);
+icm_cancel_sleep_mode(datei, pwr);
+
+register_bank_switch(datei, register_bank , 0x20);
+
+int acc_config_new = acc_config(datei, acc_co, 0x00);
+int acc_sens = acc_sensitivity_check(acc_config_new);
+
+register_bank_switch(datei, register_bank, 0x00);
+while(1) {
+
+int acc_x_h = acc_value_bytes(datei, r_acc_x_h);
+int acc_x_l = acc_value_bytes(datei, r_acc_x_l);
+
+int16_t acc_x_out = high_low_bytes_merge(acc_x_h, acc_x_l);
+
+float acc_x_g = adjusted_sensor_value(acc_x_out, acc_sens);
+
+
+
+float acc_x = g_to_m_2_conversion(sensor_message, acc_x_g);
 }
 
-int power_new = i2c_smbus_read_byte_data(file, pwr);
-cout << "Power Status 0x" << hex << power_new << '\n';
+return 0;
 
+}
+
+//Funktionsdefinitionen 
+
+
+//Linux Datei Öffnen
+int linux_i2c_file_open(string str) {
+  
+  file = open(str.c_str(), O_RDWR);
+
+  cout << "File descriptor: " << file << '\n';
+
+  if (file < 0)
+  {
+      exit(1);
+  }
+  return file;
+  }
+
+
+
+//I2C Bus Addresse auswählen die wir ansprechen möchten
+int linux_i2c_bus_adress_access(int file, int address)
+  {
+  if (ioctl(file, I2C_SLAVE, address) < 0) {
+      exit(1);
+  }
+  return 0;
+  }
+
+
+//Sleep Mode ausschalten
+int icm_cancel_sleep_mode(int file, int power_adress) {
+  int power = i2c_smbus_read_byte_data(file, power_adress);
+  int power_status = i2c_smbus_write_byte_data(file, power_adress, 0x01);
+  if (power_status < 0){
+    cout << "Problem beim Power Modus" << '\n';
+  }
+  int power_new = i2c_smbus_read_byte_data(file, power_adress);
+  cout << "Power Status 0x" << hex << power_new << '\n';
+  return 0;
+}
 
 //Register Bank Wechsel
-int register_def = i2c_smbus_write_byte_data(file, register_bank, 0x20);
+int register_bank_switch(int file, int register_adress, int change_adress){
+
+int register_def = i2c_smbus_write_byte_data(file, register_adress, change_adress);
 if (register_def < 0)
 {
   cout << "Problem beim Registerwechsel" << '\n';
 
 }
+return 0;
+}
 
 //Accelerometer Konfiguration
-int acc_config = i2c_smbus_read_byte_data(file, acc_co);
+int acc_config(int file, int acc_adress_config, int config_value){
+int acc_config = i2c_smbus_read_byte_data(file, acc_adress_config);
 if (acc_config < 0) {
     cout << "Keine Daten" << '\n';
     exit(1);
@@ -92,20 +152,25 @@ if (acc_config < 0) {
   }
 cout << "Accelerometer Konfiguration: 0x"  << hex << acc_config << '\n';
 
-int acc_config_set = i2c_smbus_write_byte_data(file, acc_co, 0x00);
+int acc_config_set = i2c_smbus_write_byte_data(file, acc_adress_config, config_value);
 if (acc_config_set < 0){
   cout << "Konfiguration fehlgeschlagen" << '\n';
   exit(1);
 
 }
-int acc_config_new = i2c_smbus_read_byte_data(file, acc_co);
+int acc_config_new = i2c_smbus_read_byte_data(file, acc_adress_config);
 if (acc_config_new < 0){
   cout << "Auslesen fehlgeschlagen" << '\n';
   exit(1);
 
+  
+}
+return 0;
 }
 
-int acc_sensitivity_setting = (acc_config_new & 0x06) >> 1 ;
+//Accelerometer Sensitivität rauslesen
+int acc_sensitivity_check (int acc_configuration){
+int acc_sensitivity_setting = (acc_configuration & 0x06) >> 1 ;
 
 cout << "Accelerometer Konfiguration: "  << dec << acc_sensitivity_setting << '\n';
 
@@ -131,56 +196,44 @@ switch(acc_sensitivity_setting)
 
 }
 
-
-int register_def_2 = i2c_smbus_write_byte_data(file, register_bank, 0x00);
-if (register_def_2 < 0)
-{
-  cout << "Problem beim Registerwechsel" << '\n';
-
+return acc_sensitivity;
 }
 
-while (1) {
-//Accelerometer X-Achse High Bytes auslesen
-int acc_x_h = i2c_smbus_read_byte_data(file, r_acc_x_h);
-  if (acc_x_h < 0) {
+//Accelerometer  Bytes auslesen
+int acc_value_bytes(int file, int acc_value_adress){
+
+int acc_value = i2c_smbus_read_byte_data(file, acc_value_adress);
+  if (acc_value< 0) {
     cout << "Keine Daten" << '\n';
     exit(1);
 
     /* ERROR HANDLING: i2c transaction failed */
   }
 
-// cout << "Accelerometer X-Achse High: " << dec << acc_x_h << '\n';
+return acc_value;
+}
 
-
-//Accelerometer X-Achse Low Bytes auslesen
-int acc_x_l = i2c_smbus_read_byte_data(file, r_acc_x_l);
-  if (acc_x_l < 0) {
-    cout << "Keine Daten" << '\n';
-    exit(1);
-    /* ERROR HANDLING: i2c transaction failed */
-  } 
-// cout << "Accelerometer X-Achse Low: " << dec << acc_x_l << '\n';
-
-
+int high_low_bytes_merge(int high_bytes, int low_bytes){
 // SOURCE: https://industrialmonitordirect.com/de/blogs/knowledgebase/combining-high-byte-low-byte-into-word-binary-math-method?srsltid=AfmBOoqPGT1rgdbHERlU07CDVI11ToKN9l4_3Tkd5s8zL_GK-xMJ23Xx/
 // Accelerometer X-Achsen Werte zusammenführen
-int16_t acc_x_out = acc_x_h * 256 + acc_x_l;
+int16_t value = high_bytes* 256 + low_bytes;
 
-//cout << "Accelerometer ohne Sensitivität: " << acc_x_out << '\n';
-
-float acc_x_g = static_cast<float> (acc_x_out) / static_cast<float> (acc_sensitivity);
-
-float acc_x = acc_x_g * 9.81;
-
-cout << "Accelerometer X-Achse " << acc_x << '\n';
-
-
-}
-return 0;
+return value;
 
 }
 
 
+float adjusted_sensor_value (int sensor_value, int sensitivity){
+float clean_sensor_value = static_cast<float> (sensor_value) / static_cast<float> (sensitivity);
+return clean_sensor_value;
+}
 
 
+float g_to_m_2_conversion(string message, float sensor_value){
 
+float final_value = sensor_value * 9.81;
+
+cout << message << ": " << final_value << '\n';
+
+return final_value;
+}
