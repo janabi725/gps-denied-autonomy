@@ -6,6 +6,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
+#include <cmath>
 
 extern "C" {
 #include <linux/i2c-dev.h>
@@ -59,7 +60,10 @@ float g_to_m_2_conversion(string message, float sensor_value);
 
 int main() {
 
-string sensor_message = "Accelerometer X-Achse";
+string sensor_message_X = "Accelerometer X-Achse";
+string sensor_message_Y = "Accelerometer Y-Achse";
+string sensor_message_Z = "Accelerometer Z-Achse";
+
 int datei = linux_i2c_file_open("/dev/i2c-1");
 
 linux_i2c_bus_adress_access(datei, addr);
@@ -73,16 +77,31 @@ int acc_sens = acc_sensitivity_check(acc_config_new);
 register_bank_switch(datei, register_bank, 0x00);
 while(1) {
 
+//X-Achse
 int acc_x_h = sensor_value_bytes(datei, r_acc_x_h);
 int acc_x_l = sensor_value_bytes(datei, r_acc_x_l);
-
 int16_t acc_x_out = high_low_bytes_merge(acc_x_h, acc_x_l);
-
 float acc_x_g = adjusted_sensor_value(acc_x_out, acc_sens);
+float acc_x = g_to_m_2_conversion(sensor_message_X, acc_x_g);
+
+//Y-Achse
+int acc_y_h = sensor_value_bytes(datei, r_acc_y_h);
+int acc_y_l = sensor_value_bytes(datei, r_acc_y_l);
+int16_t acc_y_out = high_low_bytes_merge(acc_y_h, acc_y_l);
+float acc_y_g = adjusted_sensor_value(acc_y_out, acc_sens);
+float acc_y = g_to_m_2_conversion(sensor_message_Y, acc_y_g);
 
 
+//Z-Achse
+int acc_z_h = sensor_value_bytes(datei, r_acc_z_h);
+int acc_z_l = sensor_value_bytes(datei, r_acc_z_l);
+int16_t acc_z_out = high_low_bytes_merge(acc_z_h, acc_z_l);
+float acc_z_g = adjusted_sensor_value(acc_z_out, acc_sens);
+float acc_z = g_to_m_2_conversion(sensor_message_Z, acc_z_g);
 
-float acc_x = g_to_m_2_conversion(sensor_message, acc_x_g);
+
+float acc_sqrt = sqrt(pow(acc_x, 2) + pow(acc_y, 2)  + pow(acc_z, 2) );
+cout << "Accelerometer Wurzel: " << acc_sqrt << '\n';
 }
 
 return 0;
