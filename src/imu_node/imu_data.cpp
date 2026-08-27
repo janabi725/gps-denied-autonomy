@@ -77,7 +77,7 @@ float temperature_measure (string message, float sensor_value);
 
 int main() {
 
-//Accelerometer 
+//Accelerometer Konfiguration
 
 string sensor_message_X = "Accelerometer X-Achse";
 string sensor_message_Y = "Accelerometer Y-Achse";
@@ -92,8 +92,24 @@ int acc_config_new = acc_config(datei, acc_co, 0x00);
 int acc_sens = acc_sensitivity_check(acc_config_new);
 register_bank_switch(datei, register_bank, 0x00);
 
+//Gyroskop Konfiguration
+
+string sensor_message_X_GYRO = "Gyroskop X-Achse";
+string sensor_message_Y_GYRO = "Gyroskop Y-Achse";
+string sensor_message_Z_GYRO = "Gyroskop Z-Achse";
 
 
+register_bank_switch(datei, register_bank , 0x20);
+int gyro_config_new = gyro_config(datei, gyro_co, 0x00);
+float gyro_sens = gyro_sensitivity_check(gyro_config_new);
+register_bank_switch(datei, register_bank, 0x00);
+
+//Tempeartur Konfiguration
+
+string sensor_message_temperature = "Temperatur in Grad C: ";
+
+while (1){
+//Accelerometer
 //X-Achse
 int acc_x_h = sensor_value_bytes(datei, r_acc_x_h);
 int acc_x_l = sensor_value_bytes(datei, r_acc_x_l);
@@ -120,23 +136,7 @@ float acc_sqrt = sqrt(pow(acc_x, 2) + pow(acc_y, 2)  + pow(acc_z, 2) );
 cout << "Accelerometer Wurzel: " << acc_sqrt << '\n';
 
 
-
 //Gyroskop
-
-string sensor_message_X_GYRO = "Gyroskop X-Achse";
-string sensor_message_Y_GYRO = "Gyroskop Y-Achse";
-string sensor_message_Z_GYRO = "Gyroskop Z-Achse";
-
-
-
-
-register_bank_switch(datei, register_bank , 0x20);
-int gyro_config_new = gyro_config(datei, gyro_co, 0x00);
-float gyro_sens = gyro_sensitivity_check(gyro_config_new);
-register_bank_switch(datei, register_bank, 0x00);
-
-
-
 //X-Achse
 int gyro_x_h = sensor_value_bytes(datei, r_gyro_x_h);
 int gyro_x_l = sensor_value_bytes(datei, r_gyro_x_l);
@@ -158,9 +158,9 @@ int16_t gyro_z_out = high_low_bytes_merge (gyro_z_h, gyro_z_l);
 float gyro_z_dps = adjusted_sensor_value (gyro_z_out, gyro_sens);
 float gyro_z = degrees_to_radian_conversion(sensor_message_Z_GYRO, gyro_z_dps);
 
+
+
 //Temperatur 
-while (1){
-string sensor_message_temperature = "Temperatur in Grad C: ";
 
 int temp_h = sensor_value_bytes(datei, r_temp_h);
 int temp_l = sensor_value_bytes(datei, r_temp_l);
@@ -394,7 +394,7 @@ return final_value;
 
 float temperature_measure (string message, float sensor_value){
 
-float final_value = ((sensor_value - 21)/ 333.87)+ 21;
+float final_value = ((sensor_value - 0)/ 333.87)+ 21;
 
 cout << message << ": " << final_value << '\n';
 
