@@ -45,6 +45,9 @@ __u8 r_gyro_y_l = 0x36;
 __u8 r_gyro_z_h = 0x37;
 __u8 r_gyro_z_l = 0x38;
 
+__u8 r_temp_h = 0x39;
+__u8 r_temp_l = 0x3A;
+
 __u8 pwr = 0x06;
 
 __u8 register_bank = 0x7F;
@@ -68,6 +71,7 @@ int16_t high_low_bytes_merge(int high_bytes, int low_bytes);
 float adjusted_sensor_value (int16_t sensor_value, float sensitivity);
 float g_to_m_2_conversion(string message, float sensor_value);
 float degrees_to_radian_conversion(string message, float sensor_value);
+float temperature_measure (string message, float sensor_value);
 
 //MAIN
 
@@ -132,7 +136,7 @@ float gyro_sens = gyro_sensitivity_check(gyro_config_new);
 register_bank_switch(datei, register_bank, 0x00);
 
 
-while (1){
+
 //X-Achse
 int gyro_x_h = sensor_value_bytes(datei, r_gyro_x_h);
 int gyro_x_l = sensor_value_bytes(datei, r_gyro_x_l);
@@ -154,6 +158,14 @@ int16_t gyro_z_out = high_low_bytes_merge (gyro_z_h, gyro_z_l);
 float gyro_z_dps = adjusted_sensor_value (gyro_z_out, gyro_sens);
 float gyro_z = degrees_to_radian_conversion(sensor_message_Z_GYRO, gyro_z_dps);
 
+//Temperatur 
+while (1){
+string sensor_message_temperature = "Temperatur in Grad C: ";
+
+int temp_h = sensor_value_bytes(datei, r_temp_h);
+int temp_l = sensor_value_bytes(datei, r_temp_l);
+int16_t temp_out = high_low_bytes_merge(temp_h, temp_l);
+float temp = temperature_measure(sensor_message_temperature, temp_out);
 }
 
 return 0;
@@ -378,4 +390,13 @@ cout << message << ": " << final_value << '\n';
 
 return final_value;
 
+}
+
+float temperature_measure (string message, float sensor_value){
+
+float final_value = ((sensor_value - 21)/ 333.87)+ 21;
+
+cout << message << ": " << final_value << '\n';
+
+return final_value;
 }
