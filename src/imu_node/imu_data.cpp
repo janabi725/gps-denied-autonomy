@@ -125,37 +125,36 @@ string sensor_message_Z_GYRO = "Gyroskop Z-Achse";
 
 
 
-linux_i2c_bus_adress_access(datei, addr);
-icm_cancel_sleep_mode(datei, pwr);
+
 register_bank_switch(datei, register_bank , 0x20);
 int gyro_config_new = gyro_config(datei, gyro_co, 0x00);
 float gyro_sens = gyro_sensitivity_check(gyro_config_new);
 register_bank_switch(datei, register_bank, 0x00);
 
 
-
+while (1){
 //X-Achse
 int gyro_x_h = sensor_value_bytes(datei, r_gyro_x_h);
 int gyro_x_l = sensor_value_bytes(datei, r_gyro_x_l);
 int16_t gyro_x_out = high_low_bytes_merge(gyro_x_h, gyro_x_l);
-float gyro_x_g = adjusted_sensor_value(gyro_x_out, gyro_sens);
-float gyro_x = degrees_to_radian_conversion(sensor_message_X_GYRO, gyro_x_g);
+float gyro_x_dps = adjusted_sensor_value(gyro_x_out, gyro_sens);
+float gyro_x = degrees_to_radian_conversion(sensor_message_X_GYRO, gyro_x_dps);
 
 //Y-Achse
 int gyro_y_h = sensor_value_bytes(datei, r_gyro_y_h);
 int gyro_y_l = sensor_value_bytes(datei, r_gyro_y_l);
 int16_t gyro_y_out = high_low_bytes_merge (gyro_y_h, gyro_y_l);
-float gyro_y_g = adjusted_sensor_value (gyro_y_out, gyro_sens);
-float gyro_y = degrees_to_radian_conversion(sensor_message_Y_GYRO, gyro_y_g);
+float gyro_y_dps = adjusted_sensor_value (gyro_y_out, gyro_sens);
+float gyro_y = degrees_to_radian_conversion(sensor_message_Y_GYRO, gyro_y_dps);
 
 //Z-Achse
 int gyro_z_h = sensor_value_bytes(datei, r_gyro_z_h);
 int gyro_z_l = sensor_value_bytes(datei, r_gyro_z_l);
 int16_t gyro_z_out = high_low_bytes_merge (gyro_z_h, gyro_z_l);
-float gyro_z_g = adjusted_sensor_value (gyro_z_out, gyro_sens);
-float gyro_z = degrees_to_radian_conversion(sensor_message_Z_GYRO, gyro_z_g);
+float gyro_z_dps = adjusted_sensor_value (gyro_z_out, gyro_sens);
+float gyro_z = degrees_to_radian_conversion(sensor_message_Z_GYRO, gyro_z_dps);
 
-
+}
 
 return 0;
 
