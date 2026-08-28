@@ -72,6 +72,8 @@ float adjusted_sensor_value (int16_t sensor_value, float sensitivity);
 float g_to_m_2_conversion(string message, float sensor_value);
 float degrees_to_radian_conversion(string message, float sensor_value);
 float temperature_measure (string message, float sensor_value);
+int read_register(int file, int adress);
+int write_register(int file, int adress);
 
 //MAIN
 
@@ -107,6 +109,11 @@ register_bank_switch(datei, register_bank, 0x00);
 //Tempeartur Konfiguration
 
 string sensor_message_temperature = "Temperatur in Grad C: ";
+
+
+//Magnetometer Konfiguration
+register_bank_switch(datei, register_bank, 0x00);
+
 
 while (1){
 //Accelerometer
@@ -399,4 +406,33 @@ float final_value = ((sensor_value - 0)/ 333.87)+ 21;
 cout << message << ": " << final_value << '\n';
 
 return final_value;
+}
+
+
+
+
+
+int read_register(int file, int adress){
+int value = i2c_smbus_read_byte_data(file, adress);
+  if (value< 0) {
+    cout << "Keine Daten" << '\n';
+    exit(1);
+
+    /* ERROR HANDLING: i2c transaction failed */
+  }
+
+return value;
+}
+
+
+int write_register(int file, int adress, int value){
+int write = i2c_smbus_write_byte_data(file, adress, value);
+if (write < 0){
+  cout << "Auslesen fehlgeschlagen" << '\n';
+  exit(1);
+
+  
+}
+return write;
+
 }
