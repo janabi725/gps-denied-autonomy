@@ -99,6 +99,21 @@ float magnetometer_sensitivity_tesla(int value);
 tuple <int, string, string, string> configure_accelerometer(int file);
 tuple<float, string, string, string> configure_gyroskop(int file);
 int configure_magnetometer(int file);
+float read_accelerometer(float read_accelerometer,Vector Acc, int file, int acc_sens, string sensor_message_X, string sensor_message_Y, string sensor_message_Z);
+float read_gyroskop();
+float read_magnetometer();
+float read_temperatur();
+
+
+
+
+// Struktur Definitionen
+struct Vector{
+double x;
+double y;
+double z;
+
+};
 
 
 //MAIN
@@ -116,7 +131,6 @@ auto [gyro_sens, sensor_message_X_GYRO, sensor_message_Y_GYRO, sensor_message_Z_
 configure_magnetometer(datei);
 
 
-
 //Temperatur Konfiguration
 
 string sensor_message_temperature = "Temperatur in Grad C: ";
@@ -126,31 +140,9 @@ string sensor_message_temperature = "Temperatur in Grad C: ";
 while (1){
 
 //Accelerometer
-//X-Achse
-int acc_x_h = read_register(datei, r_acc_x_h);
-int acc_x_l = read_register(datei, r_acc_x_l);
-int16_t acc_x_out = high_low_bytes_merge(acc_x_h, acc_x_l);
-float acc_x_g = adjusted_sensor_value(acc_x_out, acc_sens);
-float acc_x = g_to_m_2_conversion(sensor_message_X, acc_x_g);
 
-//Y-Achse
-int acc_y_h = read_register(datei, r_acc_y_h);
-int acc_y_l = read_register(datei, r_acc_y_l);
-int16_t acc_y_out = high_low_bytes_merge(acc_y_h, acc_y_l);
-float acc_y_g = adjusted_sensor_value(acc_y_out, acc_sens);
-float acc_y = g_to_m_2_conversion(sensor_message_Y, acc_y_g);
-
-//Z-Achse
-int acc_z_h = read_register(datei, r_acc_z_h);
-int acc_z_l = read_register(datei, r_acc_z_l);
-int16_t acc_z_out = high_low_bytes_merge(acc_z_h, acc_z_l);
-float acc_z_g = adjusted_sensor_value(acc_z_out, acc_sens);
-float acc_z = g_to_m_2_conversion(sensor_message_Z, acc_z_g);
-
-
-float acc_sqrt = sqrt(pow(acc_x, 2) + pow(acc_y, 2)  + pow(acc_z, 2) );
-cout << "Accelerometer Wurzel: " << acc_sqrt << '\n';
-
+Vector Acc;
+read_accelerometer(datei, Acc, acc_sens, sensor_message_X, sensor_message_Y, sensor_message_Z);
 
 //Gyroskop
 //X-Achse
@@ -214,6 +206,9 @@ cout << "Magnetometer Norm " << dec <<  mag_norm << " µT" << '\n';
 return 0;
 
 }
+
+
+
 
 //Funktionsdefinitionen 
 
@@ -495,3 +490,46 @@ write_register(file, i2c_slave0_control, 0x88);
 register_bank_switch(file, register_bank, 0x00);
 
 return 0;}
+
+
+
+float read_accelerometer(float read_accelerometer,Vector Acc, int file, int acc_sens, string sensor_message_X, string sensor_message_Y, string sensor_message_Z){
+
+//X-Achse
+int acc_x_h = read_register(file, r_acc_x_h);
+int acc_x_l = read_register(file, r_acc_x_l);
+int16_t acc_x_out = high_low_bytes_merge(acc_x_h, acc_x_l);
+float acc_x_g = adjusted_sensor_value(acc_x_out, acc_sens);
+float acc_x = g_to_m_2_conversion(sensor_message_X, acc_x_g);
+
+Acc.x = acc_x;
+
+return Acc.x;
+
+//Y-Achse
+int acc_y_h = read_register(file, r_acc_y_h);
+int acc_y_l = read_register(file, r_acc_y_l);
+int16_t acc_y_out = high_low_bytes_merge(acc_y_h, acc_y_l);
+float acc_y_g = adjusted_sensor_value(acc_y_out, acc_sens);
+float acc_y = g_to_m_2_conversion(sensor_message_Y, acc_y_g);
+
+Acc.y = acc_y;
+return Acc.y;
+
+
+//Z-Achse
+int acc_z_h = read_register(file, r_acc_z_h);
+int acc_z_l = read_register(file, r_acc_z_l);
+int16_t acc_z_out = high_low_bytes_merge(acc_z_h, acc_z_l);
+float acc_z_g = adjusted_sensor_value(acc_z_out, acc_sens);
+float acc_z = g_to_m_2_conversion(sensor_message_Z, acc_z_g);
+
+Acc.z = acc_z;
+return Acc.z;
+
+
+float acc_sqrt = sqrt(pow(acc_x, 2) + pow(acc_y, 2)  + pow(acc_z, 2) );
+cout << "Accelerometer Wurzel: " << acc_sqrt << '\n';
+
+
+}
