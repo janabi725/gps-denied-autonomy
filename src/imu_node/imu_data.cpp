@@ -48,12 +48,32 @@ __u8 r_gyro_z_l = 0x38;
 __u8 r_temp_h = 0x39;
 __u8 r_temp_l = 0x3A;
 
+__u8 r_mag_x_l = 0x3B;
+__u8 r_mag_x_h = 0x3C;
+__u8 r_mag_y_l = 0x3D;
+__u8 r_mag_y_h = 0x3E;
+__u8 r_mag_z_l = 0x3F;
+__u8 r_mag_z_h = 0x40;
+__u8 r_tmps = 0x41;
+__u8 r_st2 = 0x42;
+
+
 __u8 pwr = 0x06;
 
 __u8 register_bank = 0x7F;
 
 __u8 acc_co = 0x14;
 __u8 gyro_co = 0x01;
+
+
+__u8 user_control = 0x03;
+__u8 i2c_master_control = 0x01;
+__u8 i2c_slave0_adress = 0x03;
+__u8 i2c_slave0_register = 0x04;
+__u8 i2c_slave0_control = 0x05;
+__u8 i2c_slave0_DO = 0x06;
+
+
 
 
 //Funktion Deklaration
@@ -72,8 +92,11 @@ float adjusted_sensor_value (int16_t sensor_value, float sensitivity);
 float g_to_m_2_conversion(string message, float sensor_value);
 float degrees_to_radian_conversion(string message, float sensor_value);
 float temperature_measure (string message, float sensor_value);
-int read_register(int file, int adress);
-int write_register(int file, int adress);
+int read_register(int file, int register_adress);
+void write_register(int file, int register_adress, int value);
+float magnetometer_sensitivity_mikro(int16_t value);
+float magnetometer_sensitivity_tesla(int value);
+
 
 //MAIN
 
@@ -113,9 +136,25 @@ string sensor_message_temperature = "Temperatur in Grad C: ";
 
 //Magnetometer Konfiguration
 register_bank_switch(datei, register_bank, 0x00);
+int user_control_value = read_register(datei, user_control);
+user_control_value = user_control_value | 0x20;
+write_register(datei, user_control, user_control_value);
+int test = read_register(datei,user_control);
+cout << "User Control Register: " << hex << test << '\n';
+
+register_bank_switch(datei, register_bank, 0x30);
+write_register(datei, i2c_master_control, 0x07);
+write_register(datei, i2c_slave0_adress, 0x0C);
+write_register(datei, i2c_slave0_register, 0x31);
+write_register(datei, i2c_slave0_DO, 0x08);
+write_register(datei, i2c_slave0_control, 0x81);
+write_register(datei, i2c_slave0_adress, 0x8C);
+write_register(datei, i2c_slave0_register, 0x11);
+write_register(datei, i2c_slave0_control, 0x88);
+register_bank_switch(datei, register_bank, 0x00);
 
 
-while (1){
+
 //Accelerometer
 //X-Achse
 int acc_x_h = sensor_value_bytes(datei, r_acc_x_h);
@@ -173,8 +212,31 @@ int temp_h = sensor_value_bytes(datei, r_temp_h);
 int temp_l = sensor_value_bytes(datei, r_temp_l);
 int16_t temp_out = high_low_bytes_merge(temp_h, temp_l);
 float temp = temperature_measure(sensor_message_temperature, temp_out);
-}
+//}
 
+while (1){
+//Magnetometer
+int mag_x_h = read_register(datei, r_mag_x_h);
+int mag_x_l = read_register(datei, r_mag_x_l);
+int16_t mag_x_out = high_low_bytes_merge(mag_x_h, mag_x_l);
+float mag_x = magnetometer_sensitivity_mikro(mag_x_out);
+cout << "Magnetometer X-Achse: " << dec << mag_x << " µT" << '\n'; 
+
+int mag_y_h = read_register(datei, r_mag_y_h);
+int mag_y_l = read_register(datei, r_mag_y_l);
+int mag_y_out = high_low_bytes_merge(mag_y_h, mag_y_l);
+float mag_y = magnetometer_sensitivity_mikro(mag_y_out);
+cout << "Magnetometer Y-Achse: " << dec << mag_y << " µT" << '\n';
+
+int mag_z_h = read_register(datei, r_mag_z_h);
+int mag_z_l = read_register(datei, r_mag_z_l);
+int mag_z_out = high_low_bytes_merge(mag_z_h, mag_z_l);
+float mag_z = magnetometer_sensitivity_mikro(mag_z_out);
+cout << "Magnetometer Z-Achse: " << dec <<  mag_z << " µT" << '\n';
+
+read_register(datei, r_tmps);
+read_register(datei, r_st2);
+}
 return 0;
 
 }
@@ -412,10 +474,10 @@ return final_value;
 
 
 
-int read_register(int file, int adress){
-int value = i2c_smbus_read_byte_data(file, adress);
+int read_register(int file, int register_adress){
+int value = i2c_smbus_read_byte_data(file,register_adress);
   if (value< 0) {
-    cout << "Keine Daten" << '\n';
+    cout << "Keine Daten zum Auslesen" << '\n';
     exit(1);
 
     /* ERROR HANDLING: i2c transaction failed */
@@ -425,14 +487,26 @@ return value;
 }
 
 
-int write_register(int file, int adress, int value){
-int write = i2c_smbus_write_byte_data(file, adress, value);
-if (write < 0){
-  cout << "Auslesen fehlgeschlagen" << '\n';
+void write_register(int file, int register_adress, int value){
+int status = i2c_smbus_write_byte_data(file, register_adress, value);
+if (status < 0){
+  cout << "Schreiben fehlgeschlagen" << '\n';
   exit(1);
 
   
+}}
+
+
+float magnetometer_sensitivity_mikro(int16_t value){
+
+  float magnetic_field_uT = static_cast<float> (value) * 0.15;
+  return magnetic_field_uT; 
+
 }
-return write;
+
+float magnetometer_sensitivity_tesla(int value){
+
+  int magnetic_field_T =static_cast<float> (value) * 0.15 * 1e-6;
+  return magnetic_field_T; 
 
 }
