@@ -129,7 +129,7 @@ int gyro_config_new = gyro_config(datei, gyro_co, 0x00);
 float gyro_sens = gyro_sensitivity_check(gyro_config_new);
 register_bank_switch(datei, register_bank, 0x00);
 
-//Tempeartur Konfiguration
+//Temperatur Konfiguration
 
 string sensor_message_temperature = "Temperatur in Grad C: ";
 
@@ -148,12 +148,13 @@ write_register(datei, i2c_slave0_adress, 0x0C);
 write_register(datei, i2c_slave0_register, 0x31);
 write_register(datei, i2c_slave0_DO, 0x08);
 write_register(datei, i2c_slave0_control, 0x81);
+usleep(500);
 write_register(datei, i2c_slave0_adress, 0x8C);
 write_register(datei, i2c_slave0_register, 0x11);
 write_register(datei, i2c_slave0_control, 0x88);
 register_bank_switch(datei, register_bank, 0x00);
 
-
+while (1){
 
 //Accelerometer
 //X-Achse
@@ -214,7 +215,7 @@ int16_t temp_out = high_low_bytes_merge(temp_h, temp_l);
 float temp = temperature_measure(sensor_message_temperature, temp_out);
 //}
 
-while (1){
+
 //Magnetometer
 int mag_x_h = read_register(datei, r_mag_x_h);
 int mag_x_l = read_register(datei, r_mag_x_l);
@@ -236,6 +237,10 @@ cout << "Magnetometer Z-Achse: " << dec <<  mag_z << " µT" << '\n';
 
 read_register(datei, r_tmps);
 read_register(datei, r_st2);
+
+float mag_norm = sqrt(mag_x*mag_x + mag_y*mag_y+ mag_z*mag_z);
+
+cout << "Magnetometer Norm " << dec <<  mag_norm << " µT" << '\n';
 }
 return 0;
 
@@ -506,7 +511,7 @@ float magnetometer_sensitivity_mikro(int16_t value){
 
 float magnetometer_sensitivity_tesla(int value){
 
-  int magnetic_field_T =static_cast<float> (value) * 0.15 * 1e-6;
+  float magnetic_field_T =static_cast<float> (value) * 0.15 * 1e-6;
   return magnetic_field_T; 
 
 }
