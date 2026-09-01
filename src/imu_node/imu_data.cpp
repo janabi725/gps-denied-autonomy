@@ -9,6 +9,7 @@
 #include <cmath>
 #include <string>
 #include <tuple>
+#include <iomanip>
 
 
 extern "C" {
@@ -95,14 +96,15 @@ float temperature_measure (string message, float sensor_value);
 int read_register(int file, int register_adress);
 void write_register(int file, int register_adress, int value);
 float magnetometer_sensitivity_mikro(int16_t value);
-float magnetometer_sensitivity_tesla(int value);
+double magnetometer_sensitivity_tesla(int value);
 tuple <int, string, string, string> configure_accelerometer(int file);
 tuple<float, string, string, string> configure_gyroskop(int file);
 int configure_magnetometer(int file);
-float read_accelerometer(float read_accelerometer,Vector Acc, int file, int acc_sens, string sensor_message_X, string sensor_message_Y, string sensor_message_Z);
-float read_gyroskop();
-float read_magnetometer();
-float read_temperatur();
+struct Vector read_accelerometer(int file, int acc_sens, string sensor_message_X, string sensor_message_Y, string sensor_message_Z);
+struct Vector read_gyroksop(int file, float gyro_sens, string sensor_message_X_GYRO, string sensor_message_Y_GYRO, string sensor_message_Z_GYRO);
+struct Vector read_magnetometer( int file);
+
+float read_temperature(int file, string sensor_message_temperature);
 
 
 
@@ -141,68 +143,26 @@ while (1){
 
 //Accelerometer
 
-Vector Acc;
-read_accelerometer(datei, Acc, acc_sens, sensor_message_X, sensor_message_Y, sensor_message_Z);
+
+
+Vector Acc = read_accelerometer(datei , acc_sens, sensor_message_X, sensor_message_Y, sensor_message_Z);
 
 //Gyroskop
-//X-Achse
-int gyro_x_h = read_register(datei, r_gyro_x_h);
-int gyro_x_l = read_register(datei, r_gyro_x_l);
-int16_t gyro_x_out = high_low_bytes_merge(gyro_x_h, gyro_x_l);
-float gyro_x_dps = adjusted_sensor_value(gyro_x_out, gyro_sens);
-float gyro_x = degrees_to_radian_conversion(sensor_message_X_GYRO, gyro_x_dps);
-
-//Y-Achse
-int gyro_y_h = read_register(datei, r_gyro_y_h);
-int gyro_y_l = read_register(datei, r_gyro_y_l);
-int16_t gyro_y_out = high_low_bytes_merge (gyro_y_h, gyro_y_l);
-float gyro_y_dps = adjusted_sensor_value (gyro_y_out, gyro_sens);
-float gyro_y = degrees_to_radian_conversion(sensor_message_Y_GYRO, gyro_y_dps);
-
-//Z-Achse
-int gyro_z_h = read_register(datei, r_gyro_z_h);
-int gyro_z_l = read_register(datei, r_gyro_z_l);
-int16_t gyro_z_out = high_low_bytes_merge (gyro_z_h, gyro_z_l);
-float gyro_z_dps = adjusted_sensor_value (gyro_z_out, gyro_sens);
-float gyro_z = degrees_to_radian_conversion(sensor_message_Z_GYRO, gyro_z_dps);
 
 
 
-//Temperatur 
-
-int temp_h = read_register(datei, r_temp_h);
-int temp_l = read_register(datei, r_temp_l);
-int16_t temp_out = high_low_bytes_merge(temp_h, temp_l);
-float temp = temperature_measure(sensor_message_temperature, temp_out);
-//}
+Vector Gyro = read_gyroksop(datei, gyro_sens, sensor_message_X_GYRO, sensor_message_Y_GYRO, sensor_message_Z_GYRO);
 
 
-//Magnetometer
-int mag_x_h = read_register(datei, r_mag_x_h);
-int mag_x_l = read_register(datei, r_mag_x_l);
-int16_t mag_x_out = high_low_bytes_merge(mag_x_h, mag_x_l);
-float mag_x = magnetometer_sensitivity_mikro(mag_x_out);
-cout << "Magnetometer X-Achse: " << dec << mag_x << " µT" << '\n'; 
+// Magnetometer
+Vector Mag =  read_magnetometer(datei);
 
-int mag_y_h = read_register(datei, r_mag_y_h);
-int mag_y_l = read_register(datei, r_mag_y_l);
-int mag_y_out = high_low_bytes_merge(mag_y_h, mag_y_l);
-float mag_y = magnetometer_sensitivity_mikro(mag_y_out);
-cout << "Magnetometer Y-Achse: " << dec << mag_y << " µT" << '\n';
 
-int mag_z_h = read_register(datei, r_mag_z_h);
-int mag_z_l = read_register(datei, r_mag_z_l);
-int mag_z_out = high_low_bytes_merge(mag_z_h, mag_z_l);
-float mag_z = magnetometer_sensitivity_mikro(mag_z_out);
-cout << "Magnetometer Z-Achse: " << dec <<  mag_z << " µT" << '\n';
+read_temperature(datei, sensor_message_temperature);
 
-read_register(datei, r_tmps);
-read_register(datei, r_st2);
 
-float mag_norm = sqrt(mag_x*mag_x + mag_y*mag_y+ mag_z*mag_z);
-
-cout << "Magnetometer Norm " << dec <<  mag_norm << " µT" << '\n';
 }
+
 return 0;
 
 }
@@ -350,7 +310,7 @@ float g_to_m_2_conversion(string message, float sensor_value){
 
 float final_value = sensor_value * 9.81;
 
-cout << message << ": " << final_value << '\n';
+cout << message << ": " << final_value << " m/s² " << '\n';
 
 return final_value;
 }
@@ -361,7 +321,7 @@ float degrees_to_radian_conversion(string message, float sensor_value)
 {
 float final_value = sensor_value * (pi / 180);
 
-cout << message << ": " << final_value << '\n';
+cout << message << ": " << final_value << " rad/s" << '\n';
 
 return final_value;
 
@@ -374,7 +334,7 @@ float temperature_measure (string message, float sensor_value){
 
 float final_value = ((sensor_value - 0)/ 333.87)+ 21;
 
-cout << message << ": " << final_value << '\n';
+cout << message << ": " << final_value << " °C" <<'\n';
 
 return final_value;
 }
@@ -421,9 +381,9 @@ float magnetometer_sensitivity_mikro(int16_t value){
 
 //Magenetometer Sensitivität für Tesla
 
-float magnetometer_sensitivity_tesla(int value){
+double magnetometer_sensitivity_tesla(int value){
 
-  float magnetic_field_T =static_cast<float> (value) * 0.15 * 1e-6;
+  double magnetic_field_T =static_cast<double> (value) * 0.15 * 1e-6;
   return magnetic_field_T; 
 
 }
@@ -492,8 +452,10 @@ register_bank_switch(file, register_bank, 0x00);
 return 0;}
 
 
+//Accelerometer Auslesen
+struct Vector read_accelerometer(int file, int acc_sens, string sensor_message_X, string sensor_message_Y, string sensor_message_Z){
 
-float read_accelerometer(float read_accelerometer,Vector Acc, int file, int acc_sens, string sensor_message_X, string sensor_message_Y, string sensor_message_Z){
+Vector Acc;
 
 //X-Achse
 int acc_x_h = read_register(file, r_acc_x_h);
@@ -504,7 +466,7 @@ float acc_x = g_to_m_2_conversion(sensor_message_X, acc_x_g);
 
 Acc.x = acc_x;
 
-return Acc.x;
+
 
 //Y-Achse
 int acc_y_h = read_register(file, r_acc_y_h);
@@ -514,7 +476,7 @@ float acc_y_g = adjusted_sensor_value(acc_y_out, acc_sens);
 float acc_y = g_to_m_2_conversion(sensor_message_Y, acc_y_g);
 
 Acc.y = acc_y;
-return Acc.y;
+
 
 
 //Z-Achse
@@ -525,11 +487,105 @@ float acc_z_g = adjusted_sensor_value(acc_z_out, acc_sens);
 float acc_z = g_to_m_2_conversion(sensor_message_Z, acc_z_g);
 
 Acc.z = acc_z;
-return Acc.z;
+
+
 
 
 float acc_sqrt = sqrt(pow(acc_x, 2) + pow(acc_y, 2)  + pow(acc_z, 2) );
 cout << "Accelerometer Wurzel: " << acc_sqrt << '\n';
 
+
+return (Acc);
+
+
+}
+
+
+
+//Gyroskop Auslesen
+
+struct Vector read_gyroksop( int file, float gyro_sens, string sensor_message_X_GYRO, string sensor_message_Y_GYRO, string sensor_message_Z_GYRO){
+Vector Gyro;
+
+//X-Achse
+int gyro_x_h = read_register(file, r_gyro_x_h);
+int gyro_x_l = read_register(file, r_gyro_x_l);
+int16_t gyro_x_out = high_low_bytes_merge(gyro_x_h, gyro_x_l);
+float gyro_x_dps = adjusted_sensor_value(gyro_x_out, gyro_sens);
+float gyro_x = degrees_to_radian_conversion(sensor_message_X_GYRO, gyro_x_dps);
+
+//Y-Achse
+int gyro_y_h = read_register(file, r_gyro_y_h);
+int gyro_y_l = read_register(file, r_gyro_y_l);
+int16_t gyro_y_out = high_low_bytes_merge (gyro_y_h, gyro_y_l);
+float gyro_y_dps = adjusted_sensor_value (gyro_y_out, gyro_sens);
+float gyro_y = degrees_to_radian_conversion(sensor_message_Y_GYRO, gyro_y_dps);
+
+//Z-Achse
+int gyro_z_h = read_register(file, r_gyro_z_h);
+int gyro_z_l = read_register(file, r_gyro_z_l);
+int16_t gyro_z_out = high_low_bytes_merge (gyro_z_h, gyro_z_l);
+float gyro_z_dps = adjusted_sensor_value (gyro_z_out, gyro_sens);
+float gyro_z = degrees_to_radian_conversion(sensor_message_Z_GYRO, gyro_z_dps);
+
+
+Gyro.x = gyro_x;
+Gyro.y = gyro_y;
+Gyro.z = gyro_z;
+
+return (Gyro);
+
+}
+
+
+//Magnetometer Auslesen
+
+struct Vector read_magnetometer(int file){
+Vector Mag;
+int mag_x_h = read_register(file, r_mag_x_h);
+int mag_x_l = read_register(file, r_mag_x_l);
+int16_t mag_x_out = high_low_bytes_merge(mag_x_h, mag_x_l);
+double mag_x = magnetometer_sensitivity_tesla(mag_x_out);
+cout << "Magnetometer X-Achse: " << fixed << setprecision(6) << mag_x << " T" << '\n'; 
+
+int mag_y_h = read_register(file, r_mag_y_h);
+int mag_y_l = read_register(file, r_mag_y_l);
+int mag_y_out = high_low_bytes_merge(mag_y_h, mag_y_l);
+double mag_y = magnetometer_sensitivity_tesla(mag_y_out);
+cout << "Magnetometer Y-Achse: " << fixed << setprecision(6) << mag_y << " T" << '\n';
+
+int mag_z_h = read_register(file, r_mag_z_h);
+int mag_z_l = read_register(file, r_mag_z_l);
+int mag_z_out = high_low_bytes_merge(mag_z_h, mag_z_l);
+double mag_z = magnetometer_sensitivity_tesla(mag_z_out);
+cout << "Magnetometer Z-Achse: " << fixed << setprecision(6) << mag_z << " T" << '\n';
+
+read_register(file, r_tmps);
+read_register(file, r_st2);
+
+double mag_norm = sqrt(mag_x*mag_x + mag_y*mag_y+ mag_z*mag_z);
+
+cout << "Magnetometer Norm " << setprecision(6) << mag_norm << " T" << '\n';
+
+Mag.x = mag_x;
+Mag.y = mag_y;
+Mag.z = mag_z;
+
+return (Mag);
+
+}
+
+
+
+//Temperatur Auslesen
+
+float read_temperature(int file, string sensor_message_temperature){
+
+int temp_h = read_register(file, r_temp_h);
+int temp_l = read_register(file, r_temp_l);
+int16_t temp_out = high_low_bytes_merge(temp_h, temp_l);
+float temp = temperature_measure(sensor_message_temperature, temp_out);
+
+return temp;
 
 }
