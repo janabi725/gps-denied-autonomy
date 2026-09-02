@@ -1,5 +1,4 @@
-/workspace/install/imu_driver_ros/lib/imu_driver_ros/talker
-/workspace/install/imu_driver_ros/lib/imu_driver_ros/listener
+/workspace/install/imu_driver_ros/lib/imu_driver_ros/imu_publisher
 /workspace/install/imu_driver_ros/share/ament_index/resource_index/package_run_dependencies/imu_driver_ros
 /workspace/install/imu_driver_ros/share/ament_index/resource_index/parent_prefix_path/imu_driver_ros
 /workspace/install/imu_driver_ros/share/imu_driver_ros/environment/ament_prefix_path.sh

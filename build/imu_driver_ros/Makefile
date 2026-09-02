@@ -198,17 +198,17 @@ imu_driver_ros_uninstall/fast:
 .PHONY : imu_driver_ros_uninstall/fast
 
 #=============================================================================
-# Target rules for targets named talker
+# Target rules for targets named imu_publisher
 
 # Build rule for target.
-talker: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 talker
-.PHONY : talker
+imu_publisher: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 imu_publisher
+.PHONY : imu_publisher
 
 # fast build rule for target.
-talker/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/talker.dir/build.make CMakeFiles/talker.dir/build
-.PHONY : talker/fast
+imu_publisher/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imu_publisher.dir/build.make CMakeFiles/imu_publisher.dir/build
+.PHONY : imu_publisher/fast
 
 #=============================================================================
 # Target rules for targets named listener
@@ -223,53 +223,77 @@ listener/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/listener.dir/build.make CMakeFiles/listener.dir/build
 .PHONY : listener/fast
 
-src/publisher_member_function.o: src/publisher_member_function.cpp.o
-.PHONY : src/publisher_member_function.o
+src/icm20948.o: src/icm20948.cpp.o
+.PHONY : src/icm20948.o
 
 # target to build an object file
-src/publisher_member_function.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/talker.dir/build.make CMakeFiles/talker.dir/src/publisher_member_function.cpp.o
-.PHONY : src/publisher_member_function.cpp.o
+src/icm20948.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imu_publisher.dir/build.make CMakeFiles/imu_publisher.dir/src/icm20948.cpp.o
+.PHONY : src/icm20948.cpp.o
 
-src/publisher_member_function.i: src/publisher_member_function.cpp.i
-.PHONY : src/publisher_member_function.i
+src/icm20948.i: src/icm20948.cpp.i
+.PHONY : src/icm20948.i
 
 # target to preprocess a source file
-src/publisher_member_function.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/talker.dir/build.make CMakeFiles/talker.dir/src/publisher_member_function.cpp.i
-.PHONY : src/publisher_member_function.cpp.i
+src/icm20948.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imu_publisher.dir/build.make CMakeFiles/imu_publisher.dir/src/icm20948.cpp.i
+.PHONY : src/icm20948.cpp.i
 
-src/publisher_member_function.s: src/publisher_member_function.cpp.s
-.PHONY : src/publisher_member_function.s
+src/icm20948.s: src/icm20948.cpp.s
+.PHONY : src/icm20948.s
 
 # target to generate assembly for a file
-src/publisher_member_function.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/talker.dir/build.make CMakeFiles/talker.dir/src/publisher_member_function.cpp.s
-.PHONY : src/publisher_member_function.cpp.s
+src/icm20948.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imu_publisher.dir/build.make CMakeFiles/imu_publisher.dir/src/icm20948.cpp.s
+.PHONY : src/icm20948.cpp.s
 
-src/subscriber_member_function.o: src/subscriber_member_function.cpp.o
-.PHONY : src/subscriber_member_function.o
+src/imu_publisher.o: src/imu_publisher.cpp.o
+.PHONY : src/imu_publisher.o
 
 # target to build an object file
-src/subscriber_member_function.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/listener.dir/build.make CMakeFiles/listener.dir/src/subscriber_member_function.cpp.o
-.PHONY : src/subscriber_member_function.cpp.o
+src/imu_publisher.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imu_publisher.dir/build.make CMakeFiles/imu_publisher.dir/src/imu_publisher.cpp.o
+.PHONY : src/imu_publisher.cpp.o
 
-src/subscriber_member_function.i: src/subscriber_member_function.cpp.i
-.PHONY : src/subscriber_member_function.i
+src/imu_publisher.i: src/imu_publisher.cpp.i
+.PHONY : src/imu_publisher.i
 
 # target to preprocess a source file
-src/subscriber_member_function.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/listener.dir/build.make CMakeFiles/listener.dir/src/subscriber_member_function.cpp.i
-.PHONY : src/subscriber_member_function.cpp.i
+src/imu_publisher.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imu_publisher.dir/build.make CMakeFiles/imu_publisher.dir/src/imu_publisher.cpp.i
+.PHONY : src/imu_publisher.cpp.i
 
-src/subscriber_member_function.s: src/subscriber_member_function.cpp.s
-.PHONY : src/subscriber_member_function.s
+src/imu_publisher.s: src/imu_publisher.cpp.s
+.PHONY : src/imu_publisher.s
 
 # target to generate assembly for a file
-src/subscriber_member_function.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/listener.dir/build.make CMakeFiles/listener.dir/src/subscriber_member_function.cpp.s
-.PHONY : src/subscriber_member_function.cpp.s
+src/imu_publisher.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imu_publisher.dir/build.make CMakeFiles/imu_publisher.dir/src/imu_publisher.cpp.s
+.PHONY : src/imu_publisher.cpp.s
+
+src/imu_subscriber.o: src/imu_subscriber.cpp.o
+.PHONY : src/imu_subscriber.o
+
+# target to build an object file
+src/imu_subscriber.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/listener.dir/build.make CMakeFiles/listener.dir/src/imu_subscriber.cpp.o
+.PHONY : src/imu_subscriber.cpp.o
+
+src/imu_subscriber.i: src/imu_subscriber.cpp.i
+.PHONY : src/imu_subscriber.i
+
+# target to preprocess a source file
+src/imu_subscriber.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/listener.dir/build.make CMakeFiles/listener.dir/src/imu_subscriber.cpp.i
+.PHONY : src/imu_subscriber.cpp.i
+
+src/imu_subscriber.s: src/imu_subscriber.cpp.s
+.PHONY : src/imu_subscriber.s
+
+# target to generate assembly for a file
+src/imu_subscriber.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/listener.dir/build.make CMakeFiles/listener.dir/src/imu_subscriber.cpp.s
+.PHONY : src/imu_subscriber.cpp.s
 
 # Help Target
 help:
@@ -286,14 +310,17 @@ help:
 	@echo "... test"
 	@echo "... imu_driver_ros_uninstall"
 	@echo "... uninstall"
+	@echo "... imu_publisher"
 	@echo "... listener"
-	@echo "... talker"
-	@echo "... src/publisher_member_function.o"
-	@echo "... src/publisher_member_function.i"
-	@echo "... src/publisher_member_function.s"
-	@echo "... src/subscriber_member_function.o"
-	@echo "... src/subscriber_member_function.i"
-	@echo "... src/subscriber_member_function.s"
+	@echo "... src/icm20948.o"
+	@echo "... src/icm20948.i"
+	@echo "... src/icm20948.s"
+	@echo "... src/imu_publisher.o"
+	@echo "... src/imu_publisher.i"
+	@echo "... src/imu_publisher.s"
+	@echo "... src/imu_subscriber.o"
+	@echo "... src/imu_subscriber.i"
+	@echo "... src/imu_subscriber.s"
 .PHONY : help
 
 
