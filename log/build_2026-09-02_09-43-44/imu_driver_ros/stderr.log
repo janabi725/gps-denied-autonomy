@@ -1,0 +1,5 @@
+[31mCMake Error at CMakeLists.txt:21 (install):
+  install TARGETS given target "publisher_member_function" which does not
+  exist.
+
+[0m

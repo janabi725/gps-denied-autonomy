@@ -1,0 +1,2 @@
+Invoking command in '/workspace/build/imu_driver_ros': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /workspace/src/imu_driver_ros -DCMAKE_INSTALL_PREFIX=/workspace/install/imu_driver_ros
+Invoked command in '/workspace/build/imu_driver_ros' returned '1': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /workspace/src/imu_driver_ros -DCMAKE_INSTALL_PREFIX=/workspace/install/imu_driver_ros

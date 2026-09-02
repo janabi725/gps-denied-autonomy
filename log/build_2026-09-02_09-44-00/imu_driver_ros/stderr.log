@@ -1,0 +1,8 @@
+[01m[K/workspace/src/imu_driver_ros/src/subscriber_member_function.cpp:[m[K In constructor ‘[01m[KImuSubscriber::ImuSubscriber()[m[K’:
+[01m[K/workspace/src/imu_driver_ros/src/subscriber_member_function.cpp:30:33:[m[K [01;31m[Kerror: [m[K‘[01m[KMinimalSubscriber[m[K’ has not been declared
+   30 |       "ImuNode", 10, std::bind(&[01;31m[KMinimalSubscriber[m[K::topic_callback, this, _1));
+      |                                 [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+gmake[2]: *** [CMakeFiles/listener.dir/build.make:76: CMakeFiles/listener.dir/src/subscriber_member_function.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:165: CMakeFiles/listener.dir/all] Error 2
+gmake[1]: *** Waiting for unfinished jobs....
+gmake: *** [Makefile:146: all] Error 2

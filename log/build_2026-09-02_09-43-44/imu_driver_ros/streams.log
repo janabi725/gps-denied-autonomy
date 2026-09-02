@@ -1,0 +1,39 @@
+[0.019s] Invoking command in '/workspace/build/imu_driver_ros': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /workspace/src/imu_driver_ros -DCMAKE_INSTALL_PREFIX=/workspace/install/imu_driver_ros
+[0.506s] -- The C compiler identification is GNU 11.4.0
+[0.784s] -- The CXX compiler identification is GNU 11.4.0
+[0.800s] -- Detecting C compiler ABI info
+[0.899s] -- Detecting C compiler ABI info - done
+[0.908s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.908s] -- Detecting C compile features
+[0.910s] -- Detecting C compile features - done
+[0.915s] -- Detecting CXX compiler ABI info
+[0.999s] -- Detecting CXX compiler ABI info - done
+[1.008s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.008s] -- Detecting CXX compile features
+[1.009s] -- Detecting CXX compile features - done
+[1.018s] -- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)
+[1.174s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[1.308s] -- Found rclcpp: 16.0.19 (/opt/ros/humble/share/rclcpp/cmake)
+[1.380s] -- Found rosidl_generator_c: 3.1.9 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[1.388s] -- Found rosidl_adapter: 3.1.9 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[1.403s] -- Found rosidl_generator_cpp: 3.1.9 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[1.426s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.453s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.535s] -- Found rmw_implementation_cmake: 6.1.3 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[1.541s] -- Found rmw_fastrtps_cpp: 6.2.10 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[1.662s] -- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[1.686s] -- Found FastRTPS: /opt/ros/humble/include  
+[1.723s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.737s] -- Looking for pthread.h
+[1.823s] -- Looking for pthread.h - found
+[1.823s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[1.901s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[1.902s] -- Found Threads: TRUE  
+[2.003s] [31mCMake Error at CMakeLists.txt:21 (install):
+[2.003s]   install TARGETS given target "publisher_member_function" which does not
+[2.003s]   exist.
+[2.003s] 
+[2.003s] [0m
+[2.083s] -- Configuring incomplete, errors occurred!
+[2.083s] See also "/workspace/build/imu_driver_ros/CMakeFiles/CMakeOutput.log".
+[2.092s] Invoked command in '/workspace/build/imu_driver_ros' returned '1': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /workspace/src/imu_driver_ros -DCMAKE_INSTALL_PREFIX=/workspace/install/imu_driver_ros

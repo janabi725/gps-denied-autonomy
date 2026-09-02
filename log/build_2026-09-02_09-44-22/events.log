@@ -1,0 +1,144 @@
+[0.000000] (-) TimerEvent: {}
+[0.000381] (imu_driver_ros) JobQueued: {'identifier': 'imu_driver_ros', 'dependencies': OrderedDict()}
+[0.000757] (imu_driver_ros) JobStarted: {'identifier': 'imu_driver_ros'}
+[0.009189] (imu_driver_ros) JobProgress: {'identifier': 'imu_driver_ros', 'progress': 'cmake'}
+[0.009920] (imu_driver_ros) JobProgress: {'identifier': 'imu_driver_ros', 'progress': 'build'}
+[0.010693] (imu_driver_ros) Command: {'cmd': ['/usr/bin/cmake', '--build', '/workspace/build/imu_driver_ros', '--', '-j4', '-l4'], 'cwd': '/workspace/build/imu_driver_ros', 'env': OrderedDict([('HOSTNAME', 'thekizard'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/root'), ('OLDPWD', '/workspace/src/imu_driver_ros/src'), ('ROS_PYTHON_VERSION', '3'), ('ROS_DISTRO', 'humble'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('LANG', 'C.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('PWD', '/workspace/build/imu_driver_ros'), ('LC_ALL', 'C.UTF-8'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.051581] (imu_driver_ros) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target listener\x1b[0m\n'}
+[0.051840] (imu_driver_ros) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target talker\x1b[0m\n'}
+[0.069629] (imu_driver_ros) StdoutLine: {'line': b'[ 50%] Built target talker\n'}
+[0.071978] (imu_driver_ros) StdoutLine: {'line': b'[ 75%] \x1b[32mBuilding CXX object CMakeFiles/listener.dir/src/subscriber_member_function.cpp.o\x1b[0m\n'}
+[0.099732] (-) TimerEvent: {}
+[0.200134] (-) TimerEvent: {}
+[0.300498] (-) TimerEvent: {}
+[0.400855] (-) TimerEvent: {}
+[0.501235] (-) TimerEvent: {}
+[0.601600] (-) TimerEvent: {}
+[0.701982] (-) TimerEvent: {}
+[0.802387] (-) TimerEvent: {}
+[0.902765] (-) TimerEvent: {}
+[1.003160] (-) TimerEvent: {}
+[1.103544] (-) TimerEvent: {}
+[1.203927] (-) TimerEvent: {}
+[1.304293] (-) TimerEvent: {}
+[1.404690] (-) TimerEvent: {}
+[1.505097] (-) TimerEvent: {}
+[1.605460] (-) TimerEvent: {}
+[1.705853] (-) TimerEvent: {}
+[1.806221] (-) TimerEvent: {}
+[1.906592] (-) TimerEvent: {}
+[2.006968] (-) TimerEvent: {}
+[2.107345] (-) TimerEvent: {}
+[2.207763] (-) TimerEvent: {}
+[2.308144] (-) TimerEvent: {}
+[2.408496] (-) TimerEvent: {}
+[2.508848] (-) TimerEvent: {}
+[2.609198] (-) TimerEvent: {}
+[2.709559] (-) TimerEvent: {}
+[2.809917] (-) TimerEvent: {}
+[2.910269] (-) TimerEvent: {}
+[3.010633] (-) TimerEvent: {}
+[3.110997] (-) TimerEvent: {}
+[3.211354] (-) TimerEvent: {}
+[3.311714] (-) TimerEvent: {}
+[3.412138] (-) TimerEvent: {}
+[3.512502] (-) TimerEvent: {}
+[3.612864] (-) TimerEvent: {}
+[3.713225] (-) TimerEvent: {}
+[3.813586] (-) TimerEvent: {}
+[3.913936] (-) TimerEvent: {}
+[4.014296] (-) TimerEvent: {}
+[4.114650] (-) TimerEvent: {}
+[4.215009] (-) TimerEvent: {}
+[4.315361] (-) TimerEvent: {}
+[4.415732] (-) TimerEvent: {}
+[4.516091] (-) TimerEvent: {}
+[4.616430] (-) TimerEvent: {}
+[4.716775] (-) TimerEvent: {}
+[4.817129] (-) TimerEvent: {}
+[4.917483] (-) TimerEvent: {}
+[5.017824] (-) TimerEvent: {}
+[5.118181] (-) TimerEvent: {}
+[5.218536] (-) TimerEvent: {}
+[5.318900] (-) TimerEvent: {}
+[5.419278] (-) TimerEvent: {}
+[5.519627] (-) TimerEvent: {}
+[5.620025] (-) TimerEvent: {}
+[5.720487] (-) TimerEvent: {}
+[5.820868] (-) TimerEvent: {}
+[5.921246] (-) TimerEvent: {}
+[6.021606] (-) TimerEvent: {}
+[6.121983] (-) TimerEvent: {}
+[6.222334] (-) TimerEvent: {}
+[6.322693] (-) TimerEvent: {}
+[6.423044] (-) TimerEvent: {}
+[6.523392] (-) TimerEvent: {}
+[6.623751] (-) TimerEvent: {}
+[6.724129] (-) TimerEvent: {}
+[6.824478] (-) TimerEvent: {}
+[6.924819] (-) TimerEvent: {}
+[7.025166] (-) TimerEvent: {}
+[7.125520] (-) TimerEvent: {}
+[7.225897] (-) TimerEvent: {}
+[7.326263] (-) TimerEvent: {}
+[7.426620] (-) TimerEvent: {}
+[7.526971] (-) TimerEvent: {}
+[7.627323] (-) TimerEvent: {}
+[7.727684] (-) TimerEvent: {}
+[7.828116] (-) TimerEvent: {}
+[7.928459] (-) TimerEvent: {}
+[8.028807] (-) TimerEvent: {}
+[8.129158] (-) TimerEvent: {}
+[8.229505] (-) TimerEvent: {}
+[8.329874] (-) TimerEvent: {}
+[8.430263] (-) TimerEvent: {}
+[8.530614] (-) TimerEvent: {}
+[8.630961] (-) TimerEvent: {}
+[8.731313] (-) TimerEvent: {}
+[8.831656] (-) TimerEvent: {}
+[8.932034] (-) TimerEvent: {}
+[9.032353] (-) TimerEvent: {}
+[9.132679] (-) TimerEvent: {}
+[9.233031] (-) TimerEvent: {}
+[9.333404] (-) TimerEvent: {}
+[9.433785] (-) TimerEvent: {}
+[9.534149] (-) TimerEvent: {}
+[9.634549] (-) TimerEvent: {}
+[9.734940] (-) TimerEvent: {}
+[9.835368] (-) TimerEvent: {}
+[9.923389] (imu_driver_ros) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable listener\x1b[0m\n'}
+[9.935485] (-) TimerEvent: {}
+[10.035882] (-) TimerEvent: {}
+[10.136480] (-) TimerEvent: {}
+[10.237172] (-) TimerEvent: {}
+[10.337589] (-) TimerEvent: {}
+[10.437949] (-) TimerEvent: {}
+[10.538340] (-) TimerEvent: {}
+[10.593268] (imu_driver_ros) StdoutLine: {'line': b'[100%] Built target listener\n'}
+[10.603805] (imu_driver_ros) CommandEnded: {'returncode': 0}
+[10.604561] (imu_driver_ros) JobProgress: {'identifier': 'imu_driver_ros', 'progress': 'install'}
+[10.612736] (imu_driver_ros) Command: {'cmd': ['/usr/bin/cmake', '--install', '/workspace/build/imu_driver_ros'], 'cwd': '/workspace/build/imu_driver_ros', 'env': OrderedDict([('HOSTNAME', 'thekizard'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/root'), ('OLDPWD', '/workspace/src/imu_driver_ros/src'), ('ROS_PYTHON_VERSION', '3'), ('ROS_DISTRO', 'humble'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('LANG', 'C.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('PWD', '/workspace/build/imu_driver_ros'), ('LC_ALL', 'C.UTF-8'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[10.621089] (imu_driver_ros) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[10.621596] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/lib/imu_driver_ros/talker\n'}
+[10.622722] (imu_driver_ros) StdoutLine: {'line': b'-- Set runtime path of "/workspace/install/imu_driver_ros/lib/imu_driver_ros/talker" to ""\n'}
+[10.622959] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/lib/imu_driver_ros/listener\n'}
+[10.625741] (imu_driver_ros) StdoutLine: {'line': b'-- Set runtime path of "/workspace/install/imu_driver_ros/lib/imu_driver_ros/listener" to ""\n'}
+[10.626022] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/share/ament_index/resource_index/package_run_dependencies/imu_driver_ros\n'}
+[10.626216] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/share/ament_index/resource_index/parent_prefix_path/imu_driver_ros\n'}
+[10.626368] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/share/imu_driver_ros/environment/ament_prefix_path.sh\n'}
+[10.626491] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/share/imu_driver_ros/environment/ament_prefix_path.dsv\n'}
+[10.626604] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/share/imu_driver_ros/environment/path.sh\n'}
+[10.626714] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/share/imu_driver_ros/environment/path.dsv\n'}
+[10.626805] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/share/imu_driver_ros/local_setup.bash\n'}
+[10.626909] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/share/imu_driver_ros/local_setup.sh\n'}
+[10.627017] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/share/imu_driver_ros/local_setup.zsh\n'}
+[10.627133] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/share/imu_driver_ros/local_setup.dsv\n'}
+[10.627240] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/share/imu_driver_ros/package.dsv\n'}
+[10.627375] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/share/ament_index/resource_index/packages/imu_driver_ros\n'}
+[10.627502] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/share/imu_driver_ros/cmake/imu_driver_rosConfig.cmake\n'}
+[10.627615] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/share/imu_driver_ros/cmake/imu_driver_rosConfig-version.cmake\n'}
+[10.627725] (imu_driver_ros) StdoutLine: {'line': b'-- Installing: /workspace/install/imu_driver_ros/share/imu_driver_ros/package.xml\n'}
+[10.629409] (imu_driver_ros) CommandEnded: {'returncode': 0}
+[10.639206] (-) TimerEvent: {}
+[10.656169] (imu_driver_ros) JobEnded: {'identifier': 'imu_driver_ros', 'rc': 0}
+[10.657188] (-) EventReactorShutdown: {}

@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y \
     ros-humble-image-transport \
     ros-humble-vision-opencv \
     ros-humble-sensor-msgs \
+    ros-humble-rclcpp \
+    ros-humble-std-msgs \
     libopencv-dev \
     python3-opencv \
     ros-humble-camera-ros \
