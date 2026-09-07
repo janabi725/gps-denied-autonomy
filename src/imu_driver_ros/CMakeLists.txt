@@ -15,11 +15,29 @@ find_package (sensor_msgs REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 
-add_executable(imu_publisher src/imu_publisher.cpp
+add_executable(
+imu_publisher 
+src/imu_publisher.cpp 
 src/icm20948.cpp)
-ament_target_dependencies(imu_publisher rclcpp std_msgs sensor_msgs )
-add_executable(listener src/imu_subscriber.cpp)
-ament_target_dependencies(listener rclcpp std_msgs)
+
+add_executable(
+listener 
+src/imu_subscriber.cpp)
+
+
+ament_target_dependencies(
+imu_publisher 
+rclcpp 
+std_msgs
+sensor_msgs )
+
+
+ament_target_dependencies(
+listener 
+rclcpp 
+std_msgs)
+
+
 target_link_libraries(imu_publisher i2c)
 
 install(TARGETS
