@@ -77,7 +77,7 @@ private:
   float gyro_sens_;
   rclcpp::TimerBase::SharedPtr timer_;
   rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr publisher_;
-  size_t count_;
+  
 };
 
 int main(int argc, char * argv[])
